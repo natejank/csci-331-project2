@@ -253,6 +253,7 @@ def main():
                 "hill_climbing",
                 "simulated_annealing",
             ),
+            iterations=40,
         )
     else:
         projects, elapsed, _, _ = run(
