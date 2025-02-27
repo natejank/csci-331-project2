@@ -7,9 +7,12 @@ import time
 import numpy as np
 from search import Problem
 import search
+
+# replace this with an import of your code
 from teams import TeamState, TeamAction
 
 
+# modify this to use your state class
 class GroupProblem(Problem):
     def actions(self, state: TeamState):
         return state.get_moves()
@@ -49,7 +52,9 @@ def validate_moves(teams: list[list[int]], n):
 
 
 def heuristic_dist(node):
+    """Function to provide a weight to states for astar."""
     state = node.state
+    # Replace this with a state which works for your state class
     return state.conflict_weight
 
 
@@ -173,12 +178,13 @@ def benchmark(
             print(f"benchmarking {algorithm}")
             for n, k, p in splits:
                 for i in range(iterations):
+                    # set a timer to throw an exception in {timeout} seconds
                     signal.alarm(timeout)
                     try:
-                        _, elapsed, space, time = run(n, k, p, algorithm)
+                        _, elapsed, space_cpx, time_cpx = run(n, k, p, algorithm)
                         signal.alarm(0)  # cancel the alarm
 
-                        message = f"{algorithm},{n},{k},{p},{i},{iterations},{elapsed},{False},{space},{time}"
+                        message = f"{algorithm},{n},{k},{p},{i},{iterations},{elapsed},{False},{space_cpx},{time_cpx}"
                         fh.write(message + "\n")
                         print(message)
 
@@ -190,6 +196,7 @@ def benchmark(
                         fh.write(message + "\n")
 
                     fh.flush()
+                    # clear the timer
                     signal.alarm(0)
 
 
